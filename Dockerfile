@@ -1,6 +1,6 @@
 FROM node:10
 
-COPY ..
+COPY . .
 
 RUN npm install \
     && npm run build
