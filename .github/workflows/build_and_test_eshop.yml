@@ -2,7 +2,10 @@ name: Build and test eshop
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
+    branches:
+      - 'master'
 
 jobs:
   Install:
@@ -12,7 +15,7 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v2.5.0
         with:
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3.5.1
@@ -38,7 +41,7 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v2.5.0
         with:
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3.5.1
@@ -75,7 +78,7 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v2.5.0
         with:
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3.5.1
@@ -94,14 +97,14 @@ jobs:
 
   Deploy:
     needs: [Build, Test]
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Code checkout
         uses: actions/checkout@v2.5.0
         with:
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Load Node modules and build folder
         uses: actions/cache@v3.0.11
