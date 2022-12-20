@@ -102,11 +102,11 @@ jobs:
 
     steps:
       - name: Run ansible on EC2
-          uses: appleboy/ssh-action@v0.1.6
-          with:
-            host: ${{ secrets.EC2_ANSIBLE_HOST }}
-            username: ${{ secrets.EC2_ANSIBLE_USERNAME }}
-            key: ${{ secrets.EC2_ANSIBLE_SSH_KEY }}
-            script: |
-              cd 4IT572_ansible/ansible
-              ansible-playbook ec2_deploy.yml --ask-vault-pass --user ec2-user --key-file ../devops.pem
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_ANSIBLE_HOST }}
+          username: ${{ secrets.EC2_ANSIBLE_USERNAME }}
+          key: ${{ secrets.EC2_ANSIBLE_SSH_KEY }}
+          script: |
+            cd 4IT572_ansible/ansible
+            ansible-playbook ec2_deploy.yml --ask-vault-pass --user ec2-user --key-file ../devops.pem
